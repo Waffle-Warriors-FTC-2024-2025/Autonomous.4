@@ -1,0 +1,62 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+@Autonomous(name = "BlueFar (Blocks to Java)")
+public class BlueFar extends LinearOpMode {
+
+  private Servo servogripper;
+  private Servo servowrist;
+  private DcMotor frontrightmotor;
+  private CRServo rightrearmotor;
+  private DcMotor leftarmmotor;
+  private DcMotor frontleftmotor;
+  private CRServo leftrearmotor;
+
+  int Left_pos;
+  int Right_pos;
+
+  /**
+   * This function is executed when this OpMode is selected from the Driver Station.
+   */
+  @Override
+  public void runOpMode() {
+    double autoForwardspikeMark;
+    double spikeMarkTurn;
+    double autoBackDropPower;
+    double armBackdrop;
+
+    servogripper = hardwareMap.get(Servo.class, "servo gripper");
+    servowrist = hardwareMap.get(Servo.class, "servo wrist");
+    frontrightmotor = hardwareMap.get(DcMotor.class, "front right motor");
+    rightrearmotor = hardwareMap.get(CRServo.class, "right rear motor");
+    leftarmmotor = hardwareMap.get(DcMotor.class, "left arm motor");
+    frontleftmotor = hardwareMap.get(DcMotor.class, "front left motor");
+    leftrearmotor = hardwareMap.get(CRServo.class, "left rear motor");
+
+    // Put initialization blocks here.
+    servogripper.setPosition(1);
+    servowrist.setPosition(1);
+    frontrightmotor.setDirection(DcMotor.Direction.REVERSE);
+    rightrearmotor.setDirection(CRServo.Direction.REVERSE);
+    leftarmmotor.setDirection(DcMotor.Direction.REVERSE);
+    telemetry.addLine("initialized");
+    waitForStart();
+    if (opModeIsActive()) {
+      // Put run blocks here.
+      autoForwardspikeMark += 0.8;
+      frontleftmotor.setPower(-autoForwardspikeMark);
+      frontrightmotor.setPower(autoForwardspikeMark);
+      rightrearmotor.setPower(autoForwardspikeMark);
+      leftrearmotor.setPower(autoForwardspikeMark);
+      sleep(500);
+      frontleftmotor.setPower(0);
+      frontrightmotor.setPower(0);
+      leftrearmotor.setPower(0);
+      rightrearmotor.setPower(0);
+    }
+  }
